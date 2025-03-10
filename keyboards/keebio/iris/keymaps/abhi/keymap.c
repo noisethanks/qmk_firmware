@@ -3,6 +3,7 @@ enum my_layers {
     _WORK,
     _GAMING,
     _FUNCTION,
+    _UTILITY,
 };
 
 #define WORK DF(_WORK)
@@ -26,7 +27,23 @@ enum {
     FN_DANCE,
     SUPER_DANCE,
     CTRL_DANCE,
-    ALT_DANCE
+    ALT_DANCE,
+    UTILITY_DANCE,
+};
+const key_override_t F7_OVERRIDE = ko_make_basic(MOD_MASK_SHIFT, KC_F1,KC_F7);
+const key_override_t F8_OVERRIDE = ko_make_basic(MOD_MASK_SHIFT, KC_F2,KC_F8);
+const key_override_t F9_OVERRIDE = ko_make_basic(MOD_MASK_SHIFT, KC_F3,KC_F9);
+const key_override_t F10_OVERRIDE = ko_make_basic(MOD_MASK_SHIFT, KC_F4,KC_F10);
+const key_override_t F11_OVERRIDE = ko_make_basic(MOD_MASK_SHIFT, KC_F5,KC_F11);
+const key_override_t F12_OVERRIDE = ko_make_basic(MOD_MASK_SHIFT, KC_F6,KC_F12);
+
+const key_override_t *key_overrides[] = {
+   &F7_OVERRIDE,
+   &F8_OVERRIDE,
+   &F9_OVERRIDE,
+   &F10_OVERRIDE,
+   &F11_OVERRIDE,
+   &F12_OVERRIDE,
 };
 
 td_state_t cur_dance(tap_dance_state_t *state);
@@ -41,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_WORK] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     _______,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                 KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
+     _______,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                                 KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  TD(UTILITY_DANCE),
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                                 KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_MINUS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -62,23 +79,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_BSLS, KC_X,    KC_C,    KC_D,    KC_V,    KC_Z,   KC_MEH,           KC_MEH,  KC_K,    KC_H,   KC_COMM, KC_DOT,  KC_QUOT, KC_SLASH,
  //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                              TD(SUPER_DANCE),  KC_SPC, TD(CTRL_DANCE),       KC_RSFT, TD(FN_DANCE),TD(ALT_DANCE)
+                                 KC_LALT,  KC_SPC,    KC_LCTL,                   KC_RSFT, TD(FN_DANCE),TD(SUPER_DANCE)
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
     ),
   [_FUNCTION] = LAYOUT(
  //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     QK_BOOT, KC_F1,    KC_F2,    KC_F3, KC_F4,    KC_F5,                             KC_F6,   KC_F7,    KC_F8,   KC_F9,   KC_F10, _______,
+     _______, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, KC_F11, KC_LBRC, _______, KC_RBRC, _______,                            _______, KC_BSPC, KC_UP, KC_DEL,    _______, KC_EQL,
+     _______, _______, KC_LBRC, _______, KC_RBRC, _______,                            _______, KC_BSPC, KC_UP, KC_DEL,    _______, KC_EQL,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_GRV,  KC_F12, _______, _______, _______, _______,                            _______, KC_LEFT, KC_DOWN, KC_RIGHT, _______, DF(_GAMING),
+     KC_GRV,  _______, _______, _______, _______, _______,                            _______, KC_LEFT, KC_DOWN, KC_RIGHT, _______, DF(_GAMING),
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      RGB_MOD, _______, _______, _______, _______, _______, _______,           _______, _______, _______, _______, _______, _______, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬───┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, _______, _______,                   KC_RSFT, _______, _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
-  )
-};
+  ),
+  [_UTILITY] = LAYOUT(
+  //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
+     QK_BOOT, KC_F1,    KC_F2,    KC_F3, KC_F4,    KC_F5,                             KC_F6,   _______, _______, _______, _______, _______,
+  //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
+     _______, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
+  //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
+     _______, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
+  //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
+     _______, _______, _______, _______, _______, _______, _______,         _______,  _______, _______, _______, _______, _______, _______,
+  //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬───┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
+                                    _______, _______, _______,                   KC_RSFT, _______, _______
+                                // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
+  )};
 
 td_state_t cur_dance(tap_dance_state_t *state) {
     if (state->count == 1) {
@@ -104,6 +133,24 @@ void fn_finished(tap_dance_state_t *state, void *user_data) {
         default:
             break;
     }
+}
+
+void utility_finished(tap_dance_state_t *state, void *user_data) {
+    td_state_t td_state = cur_dance(state);
+    layer_on(_UTILITY);
+    switch (td_state) {
+        case TD_SINGLE_HOLD:
+            break;
+        case TD_DOUBLE_HOLD:
+            register_mods(MOD_BIT(KC_RSFT));
+            break;
+        default:
+            break;
+    }
+}
+void utility_reset(tap_dance_state_t *state, void *user_data) {
+   layer_off(_UTILITY);
+   unregister_mods(MOD_BIT(KC_RSFT));
 }
 
 void fn_reset(tap_dance_state_t *state, void *user_data) {
@@ -172,7 +219,8 @@ tap_dance_action_t tap_dance_actions[] = {
     [FN_DANCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fn_finished, fn_reset),
     [SUPER_DANCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, super_finished, super_reset),
     [CTRL_DANCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, ctrl_finished, ctrl_reset),
-    [ALT_DANCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, alt_finished, alt_reset)
+    [ALT_DANCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, alt_finished, alt_reset),
+    [UTILITY_DANCE] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, utility_finished, utility_reset)
 };
 
 // layer_state_t layer_state_set_user(layer_state_t state) {
