@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define SPLIT_HAND_PIN D5
 
-#define TAPPING_TERM 400
+#define TAPPING_TERM 160
 
 #define BOOTMAGIC_ROW 0
 #define BOOTMAGIC_COLUMN 0
